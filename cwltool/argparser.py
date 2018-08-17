@@ -157,6 +157,7 @@ def arg_parser():  # type: () -> argparse.ArgumentParser
                         type=Text,
                         help="File of options to pass to jshint."
                         "This includes the added option \"includewarnings\". ")
+    parser.add_argument("--beta_relaxed_fmt_check", action="store_true", help="Disable file format validation.")
     dockergroup = parser.add_mutually_exclusive_group()
     dockergroup.add_argument("--user-space-docker-cmd", metavar="CMD",
                         help="(Linux/OS X only) Specify a user space docker "
