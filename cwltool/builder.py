@@ -104,6 +104,7 @@ class Builder(object):
         self.mutation_manager = None  # type: MutationManager
         self.force_docker_pull = False  # type: bool
         self.formatgraph = None  # type: Graph
+        self.beta_relaxed_fmt_check = False # type: bool
 
         # One of "no_listing", "shallow_listing", "deep_listing"
         # Will be default "no_listing" for CWL v1.1
@@ -235,7 +236,7 @@ class Builder(object):
 
                     normalizeFilesDirs(datum["secondaryFiles"])
 
-                if "format" in schema:
+                if "format" in schema and not self.beta_relaxed_fmt_check:
                     try:
                         checkFormat(datum, self.do_eval(schema["format"]), self.formatgraph)
                     except validate.ValidationException as ve:

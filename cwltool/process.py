@@ -576,9 +576,11 @@ class Process(six.with_metaclass(abc.ABCMeta, object)):
         debug: enable debugging output
         js_console: enable javascript console output
         tmp_outdir_prefix: Path prefix for intermediate output directories
+        beta_relaxed_fmt_check: disable file format check
         """
 
         builder = Builder()
+        builder.beta_relaxed_fmt_check = kwargs.get("beta_relaxed_fmt_check", False)
         builder.job = cast(Dict[Text, Union[Dict[Text, Any], List,
                                             Text]], copy.deepcopy(joborder))
 
