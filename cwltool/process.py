@@ -237,7 +237,14 @@ def stageFiles(pm, stageFunc=None, ignoreWritable=False, symLink=True, secret_st
             if p.resolved.startswith("_:"):
                 os.makedirs(p.target, 0o0755)
             else:
-                shutil.copytree(p.resolved, p.target)
+                # this try/catch block is used to inhibit
+                # 'OSError: [Errno 17] File exist' error
+                # which occurs randomly when running
+                # TransDecoder.predict' tool
+                try:
+                    shutil.copytree(p.resolved, p.target)
+                except OSError as e:
+                    print('cwl-tmp-hack - {}'.format(str(e)))
                 ensure_writable(p.target)
         elif p.type == "CreateFile":
             with open(p.target, "wb") as n:
